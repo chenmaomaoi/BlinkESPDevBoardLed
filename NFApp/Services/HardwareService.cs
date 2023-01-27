@@ -46,12 +46,12 @@ namespace NFApp.Services
         /// BLE连接状态指示信号
         /// </summary>
         /// <remarks> 高电平：已连接 </remarks>
-        public GpioPin BLEState;
+        public GpioPin IsEnableSerialPortBroadcast;
 
         /// <summary>
         /// BLE串口 COM2
         /// </summary>
-        public SerialPort BLESerialPort;
+        public SerialPort BroadCastSerialPort;
 
         /// <summary>
         /// SHT30 温湿度传感器
@@ -74,12 +74,12 @@ namespace NFApp.Services
             // BLE串口 COM2
             Configuration.SetPinFunction(Gpio.IO16, DeviceFunction.COM2_RX);
             Configuration.SetPinFunction(Gpio.IO17, DeviceFunction.COM2_TX);
-            BLESerialPort = new("COM2", 115200);
+            BroadCastSerialPort = new("COM2", 115200);
 
             Button = new GpioButton(Gpio.IO00);
             GpioController _gpioController = new();
             LED = _gpioController.OpenPin(Gpio.IO02, PinMode.Output);
-            BLEState = _gpioController.OpenPin(Gpio.IO23, PinMode.Input);
+            IsEnableSerialPortBroadcast = _gpioController.OpenPin(Gpio.IO23, PinMode.Input);
             SHT30Sensor = new(I2cDevice.Create(new(1, (byte)I2cAddress.AddrLow, I2cBusSpeed.FastMode)));
             BMP280Sencer = new(I2cDevice.Create(new(1, Bmx280Base.SecondaryI2cAddress, I2cBusSpeed.FastMode)))
             {

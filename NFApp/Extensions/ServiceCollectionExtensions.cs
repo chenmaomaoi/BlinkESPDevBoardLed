@@ -17,7 +17,6 @@ namespace NFApp.Extensions
 
             //获取所有类型
             Type[] allTypes = Assembly.GetExecutingAssembly().GetTypes();
-
             foreach (Type type in allTypes)
             {
                 if (type.IsClass)
@@ -41,7 +40,6 @@ namespace NFApp.Extensions
                     }
                 }
             }
-
             return services;
         }
 

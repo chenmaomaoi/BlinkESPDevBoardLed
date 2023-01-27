@@ -21,12 +21,13 @@
     <Compile Include="DependencyAttribute\HostedDependencyAttribute.cs" />
     <Compile Include="DependencyAttribute\SingletonDependencyAttribute.cs" />
     <Compile Include="DependencyAttribute\TransientDependencyAttribute.cs" />
+    <Compile Include="Dtos\SencerValues.cs" />
     <Compile Include="Extensions\ServiceCollectionExtensions.cs" />
     <Compile Include="Services\ButtonService.cs" />
     <Compile Include="Services\HardwareService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BLEBroadcastService.cs" />
+    <Compile Include="Services\SerialPortBroadcastService.cs" />
     <Compile Include="Services\LEDBlinkService.cs" />
   </ItemGroup>
   <ItemGroup>

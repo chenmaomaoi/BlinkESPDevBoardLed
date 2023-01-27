@@ -12,8 +12,8 @@ namespace NFApp.Services
     /// <summary>
     /// 板载按钮服务
     /// </summary>
-    [SingletonDependencyAttribute]
-    public class ButtonService
+    [HostedDependency]
+    public class ButtonService : IHostedService
     {
         private readonly GpioButton _button;
         private readonly LEDBlinkService _ledBlink;
@@ -25,9 +25,7 @@ namespace NFApp.Services
             _button = hardware.Button;
             _ledBlink = ledBlink;
             _logger = logger;
-
             times = 0;
-
             _button.Press += button_Press;
         }
 
@@ -36,6 +34,14 @@ namespace NFApp.Services
             times++;
 
             _ledBlink.StartBlinkAsync(times * 10, 1000);
+        }
+
+        public void Start()
+        {
+        }
+
+        public void Stop()
+        {
         }
     }
 }
