@@ -18,6 +18,11 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="DependencyAttribute\HostedDependencyAttribute.cs" />
+    <Compile Include="DependencyAttribute\SingletonDependencyAttribute.cs" />
+    <Compile Include="DependencyAttribute\TransientDependencyAttribute.cs" />
+    <Compile Include="Extensions\ServiceCollectionExtensions.cs" />
+    <Compile Include="Services\ButtonService.cs" />
     <Compile Include="Services\HardwareService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,6 +65,9 @@
     </Reference>
     <Reference Include="nanoFramework.Json">
       <HintPath>..\packages\nanoFramework.Json.2.2.84\lib\nanoFramework.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Logging">
+      <HintPath>..\packages\nanoFramework.Logging.1.1.63\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager">
       <HintPath>..\packages\nanoFramework.ResourceManager.1.2.13\lib\nanoFramework.ResourceManager.dll</HintPath>

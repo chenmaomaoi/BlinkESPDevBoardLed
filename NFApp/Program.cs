@@ -1,6 +1,8 @@
-using nanoFramework.DependencyInjection;
 using nanoFramework.Hosting;
-using NFApp.Services;
+using Microsoft.Extensions.Logging;
+using NFApp.Extensions;
+using System;
+using System.Diagnostics;
 
 namespace NFApp
 {
@@ -8,24 +10,22 @@ namespace NFApp
     {
         public static void Main()
         {
-            // 连接WiFi
-            HardwareService.ConnectWifi();
-
-            IHost host = Host.CreateDefaultBuilder()
-                .ConfigureServices(services =>
-                {
-                    // 硬件设备
-                    services.AddSingleton(typeof(HardwareService));
-
-                    // 板载LED闪烁
-                    services.AddHostedService(typeof(LEDBlinkService));
-
-                    // 蓝牙广播
-                    services.AddHostedService(typeof(BLEBroadcastService));
-                })
-                .Build();
-
-            host.Run();
+            try
+            {
+                IHost host = Host.CreateDefaultBuilder()
+                    .ConfigureServices(services =>
+                    {
+                        services.AddDebugLogging(LogLevel.Trace);
+                        services.AddServices();
+                    })
+                    .Build();
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"message:{ex.Message}");
+                Debug.WriteLine($"stack trace:{ex.StackTrace}");
+            }
         }
     }
 }

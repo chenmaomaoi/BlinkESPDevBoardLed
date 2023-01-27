@@ -1,29 +1,69 @@
-﻿using System.Threading;
-using nanoFramework.Hosting;
+﻿using System.Device.Gpio;
+using System.Threading;
+using Microsoft.Extensions.Logging;
+using NFApp.DependencyAttribute;
 
 namespace NFApp.Services
 {
     /// <summary>
-    /// 板载LED闪烁
+    /// 板载LED闪烁服务
     /// </summary>
-    public class LEDBlinkService : BackgroundService
+    [SingletonDependency]
+    public class LEDBlinkService
     {
-        private readonly HardwareService _hardwareDevices;
+        private readonly GpioPin _led;
+        private readonly ILogger _logger;
 
-        public LEDBlinkService(HardwareService hardwareDevices)
+        private bool _signalStop;
+        private Thread _thread;
+
+        public LEDBlinkService(HardwareService hardware, ILogger logger)
         {
-            _hardwareDevices = hardwareDevices;
+            _led = hardware.LED;
+            _logger = logger;
+            _signalStop = false;
+
+            StartBlinkAsync(1000, 1000);
         }
 
-        protected override void ExecuteAsync()
+        /// <summary>
+        /// 闪烁
+        /// </summary>
+        /// <param name="brigth">亮灯时间</param>
+        /// <param name="goOut">灭灯时间</param>
+        public void StartBlinkAsync(int brigth = 50, int goOut = 950)
         {
-            while (!CancellationRequested)
+            if (_thread != null)
             {
-                _hardwareDevices.LED.Toggle();
-                Thread.Sleep(50);
-                _hardwareDevices.LED.Toggle();
+                StopBlink();
+            }
+            _signalStop = false;
 
-                Thread.Sleep(1_000);
+            _thread = new Thread(() =>
+            {
+                int th_bright = brigth;
+                int th_goOut = goOut;
+                while (!_signalStop)
+                {
+                    _led.Toggle();
+                    Thread.Sleep(th_bright);
+                    _led.Toggle();
+
+                    Thread.Sleep(th_goOut);
+                }
+            });
+            _thread.Start();
+        }
+
+        /// <summary>
+        /// 停止闪烁
+        /// </summary>
+        public void StopBlink()
+        {
+            _signalStop = true;
+            while (_thread.ThreadState != ThreadState.Stopped)
+            {
+                Thread.Sleep(50);
             }
         }
     }

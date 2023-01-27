@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Device.I2c;
-using System.Device.Wifi;
 using System.Diagnostics;
 using System.IO.Ports;
+using System.Threading;
 using Iot.Device.Bmxx80;
+using Iot.Device.Button;
 using Iot.Device.Sht3x;
+using Microsoft.Extensions.Logging;
 using nanoFramework.Hardware.Esp32;
+using nanoFramework.Networking;
+using NFApp.DependencyAttribute;
 
 namespace NFApp.Services
 {
+    /// <summary>
+    /// 硬件服务
+    /// </summary>
+    [SingletonDependency]
     public class HardwareService
     {
         /// <summary>
@@ -22,10 +30,12 @@ namespace NFApp.Services
         /// </summary>
         private const string PASSWORD = "13852981072";
 
+        private readonly ILogger _logger;
+
         /// <summary>
         /// 板载按钮
         /// </summary>
-        public GpioPin Button;
+        public GpioButton Button;
 
         /// <summary>
         /// 板载LED灯
@@ -53,8 +63,10 @@ namespace NFApp.Services
         /// </summary>
         public Bmp280 BMP280Sencer;
 
-        public HardwareService()
+        public HardwareService(ILogger logger)
         {
+            _logger = logger;
+
             // I2C接口 busId=1
             Configuration.SetPinFunction(Gpio.IO21, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(Gpio.IO22, DeviceFunction.I2C1_CLOCK);
@@ -64,8 +76,8 @@ namespace NFApp.Services
             Configuration.SetPinFunction(Gpio.IO17, DeviceFunction.COM2_TX);
             BLESerialPort = new("COM2", 115200);
 
+            Button = new GpioButton(Gpio.IO00);
             GpioController _gpioController = new();
-            Button = _gpioController.OpenPin(Gpio.IO00, PinMode.Input);
             LED = _gpioController.OpenPin(Gpio.IO02, PinMode.Output);
             BLEState = _gpioController.OpenPin(Gpio.IO23, PinMode.Input);
             SHT30Sensor = new(I2cDevice.Create(new(1, (byte)I2cAddress.AddrLow, I2cBusSpeed.FastMode)));
@@ -75,19 +87,36 @@ namespace NFApp.Services
                 PressureSampling = Sampling.UltraHighResolution,
                 FilterMode = Iot.Device.Bmxx80.FilteringMode.Bmx280FilteringMode.X8
             };
+
+            // 连接WiFi
+            ConnectWifiAsync();
         }
 
         /// <summary>
         /// 连接WIFI
         /// </summary>
-        public static void ConnectWifi(string ssid = SSID, string password = PASSWORD)
+        public void ConnectWifi(string ssid = SSID, string password = PASSWORD)
         {
-            WifiAdapter wifi = WifiAdapter.FindAllAdapters()[0];
-            wifi.Disconnect();
+            if (!WifiNetworkHelper.ConnectDhcp(ssid, password, requiresDateTime: true))
+            {
+                // Something went wrong, you can get details with the ConnectionError property:
+                Debug.WriteLine($"Can't connect to the network, error: {WifiNetworkHelper.Status}");
+                if (WifiNetworkHelper.HelperException != null)
+                {
+                    _logger.LogInformation($"ex: {WifiNetworkHelper.HelperException}");
+                }
+            }
+            else
+            {
+                _logger.LogInformation("WiFi Connected.");
+            }
 
-            WifiConnectionResult result = wifi.Connect(ssid, WifiReconnectionKind.Manual, password);
-            Debug.WriteLine(result.ConnectionStatus.ToString());
-            Debug.WriteLine(DateTime.UtcNow.AddHours(8).ToString());
+            _logger.LogInformation($"{DateTime.UtcNow.AddHours(8)}");
+        }
+
+        public void ConnectWifiAsync(string ssid = SSID, string password = PASSWORD)
+        {
+            new Thread(() => ConnectWifi(ssid, password)).Start();
         }
     }
 }
