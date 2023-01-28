@@ -23,7 +23,7 @@ namespace NFApp.Services
         private readonly ILogger _logger;
 
         public SerialPortBroadcastService(HardwareService hardwareDevices, ILogger logger)
-            : base(TimeSpan.FromSeconds(5))
+            : base(TimeSpan.FromSeconds(1))
         {
             _hardware = hardwareDevices;
             _logger = logger;
@@ -43,14 +43,14 @@ namespace NFApp.Services
                 {
                     SHT30Sencer = new SencerValues.SHT30()
                     {
-                        Temperature = _hardware.SHT30Sensor.Temperature.DegreesCelsius,
-                        Humidity = _hardware.SHT30Sensor.Humidity.Percent
+                        Temperature = (float)_hardware.SHT30Sensor.Temperature.DegreesCelsius,
+                        Humidity = (float)_hardware.SHT30Sensor.Humidity.Percent
                     },
                     BMP280Sencer = new SencerValues.BMP280()
                     {
-                        Temperature = bmp280Value.Temperature.DegreesCelsius,
-                        Pressure = bmp280Value.Pressure.Hectopascals,
-                        Altitude = WeatherHelper.CalculateAltitude(bmp280Value.Pressure, bmp280Value.Temperature).Meters
+                        Temperature = (float)bmp280Value.Temperature.DegreesCelsius,
+                        Pressure = (float)bmp280Value.Pressure.Hectopascals,
+                        Altitude = (float)WeatherHelper.CalculateAltitude(bmp280Value.Pressure, bmp280Value.Temperature).Meters
                     }
                 };
                 _hardware.BroadCastSerialPort.WriteLine(JsonConvert.SerializeObject(result));

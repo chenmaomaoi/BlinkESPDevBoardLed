@@ -8,15 +8,15 @@
 
         public class SHT30
         {
-            public double Temperature { get; set; }
-            public double Humidity { get; set; }
+            public float Temperature { get; set; }
+            public float Humidity { get; set; }
         };
 
         public class BMP280
         {
-            public double Temperature { get; set; }
-            public double Pressure { get; set; }
-            public double Altitude { get; set; }
+            public float Temperature { get; set; }
+            public float Pressure { get; set; }
+            public float Altitude { get; set; }
         }
     }
 }

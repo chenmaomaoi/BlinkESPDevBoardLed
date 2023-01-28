@@ -85,7 +85,7 @@ namespace NFApp.Services
             {
                 TemperatureSampling = Sampling.UltraHighResolution,
                 PressureSampling = Sampling.UltraHighResolution,
-                FilterMode = Iot.Device.Bmxx80.FilteringMode.Bmx280FilteringMode.X8
+                FilterMode = Iot.Device.Bmxx80.FilteringMode.Bmx280FilteringMode.Off
             };
 
             // 连接WiFi
