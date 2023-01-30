@@ -2,7 +2,10 @@
 
 namespace NFApp.DependencyAttribute
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    /// <summary>
+    /// 单例
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class SingletonDependencyAttribute : Attribute
     {
     }

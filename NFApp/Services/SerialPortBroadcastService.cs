@@ -19,32 +19,32 @@ namespace NFApp.Services
     [HostedDependency]
     public class SerialPortBroadcastService : SchedulerService
     {
-        private readonly HardwareService _hardware;
-        private readonly ILogger _logger;
+        private readonly HardwareService hardware;
+        private readonly ILogger logger;
 
-        public SerialPortBroadcastService(HardwareService hardwareDevices, ILogger logger)
+        public SerialPortBroadcastService(HardwareService hardwareDevices, ILoggerFactory loggerFactory)
             : base(TimeSpan.FromSeconds(1))
         {
-            _hardware = hardwareDevices;
-            _logger = logger;
+            hardware = hardwareDevices;
+            logger = loggerFactory.CreateLogger(nameof(ButtonService));
 
-            if (!_hardware.BroadCastSerialPort.IsOpen)
+            if (!hardware.SerialPortCOM2.IsOpen)
             {
-                _hardware.BroadCastSerialPort.Open();
+                hardware.SerialPortCOM2.Open();
             }
         }
 
         protected override void ExecuteAsync()
         {
-            if (_hardware.IsEnableSerialPortBroadcast.Read() == PinValue.High)
+            if (hardware.isConnectedBLESerialPortCOM2.Read() == PinValue.High)
             {
-                Bmp280ReadResult bmp280Value = _hardware.BMP280Sencer.Read();
+                Bmp280ReadResult bmp280Value = hardware.BMP280Sencer.Read();
                 SencerValues result = new()
                 {
                     SHT30Sencer = new SencerValues.SHT30()
                     {
-                        Temperature = (float)_hardware.SHT30Sensor.Temperature.DegreesCelsius,
-                        Humidity = (float)_hardware.SHT30Sensor.Humidity.Percent
+                        Temperature = (float)hardware.SHT30Sensor.Temperature.DegreesCelsius,
+                        Humidity = (float)hardware.SHT30Sensor.Humidity.Percent
                     },
                     BMP280Sencer = new SencerValues.BMP280()
                     {
@@ -53,10 +53,9 @@ namespace NFApp.Services
                         Altitude = (float)WeatherHelper.CalculateAltitude(bmp280Value.Pressure, bmp280Value.Temperature).Meters
                     }
                 };
-                _hardware.BroadCastSerialPort.WriteLine(JsonConvert.SerializeObject(result));
-                _logger.LogDebug(JsonConvert.SerializeObject(result));
+                hardware.SerialPortCOM2.WriteLine(JsonConvert.SerializeObject(result));
+                logger.LogDebug(JsonConvert.SerializeObject(result));
             }
-            _logger.LogDebug(_hardware.SHT30Sensor.Temperature.DegreesCelsius.ToString("f1 C"));
         }
     }
 }

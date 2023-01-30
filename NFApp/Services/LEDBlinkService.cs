@@ -1,6 +1,6 @@
-﻿using System.Device.Gpio;
+﻿using System;
+using System.Device.Gpio;
 using System.Threading;
-using Microsoft.Extensions.Logging;
 using NFApp.DependencyAttribute;
 
 namespace NFApp.Services
@@ -11,19 +11,25 @@ namespace NFApp.Services
     [SingletonDependency]
     public class LEDBlinkService
     {
-        private readonly GpioPin _led;
-        private readonly ILogger _logger;
+        /// <summary>
+        /// LED灯控制引脚。高电平点亮
+        /// </summary>
+        private readonly GpioPin led;
 
-        private bool _signalStop;
-        private Thread _thread;
+        /// <summary>
+        /// 停止信号
+        /// </summary>
+        private bool signalStop;
 
-        public LEDBlinkService(HardwareService hardware, ILogger logger)
+        /// <summary>
+        /// 控制LED闪烁的线程
+        /// </summary>
+        private Thread executingThread;
+
+        public LEDBlinkService(HardwareService hardware)
         {
-            _led = hardware.LED;
-            _logger = logger;
-            _signalStop = false;
-
-            StartBlinkAsync(1000, 1000);
+            led = hardware.LED;
+            signalStop = false;
         }
 
         /// <summary>
@@ -31,28 +37,33 @@ namespace NFApp.Services
         /// </summary>
         /// <param name="brigth">亮灯时间</param>
         /// <param name="goOut">灭灯时间</param>
+        /// <exception cref="ArgumentOutOfRangeException"/>
         public void StartBlinkAsync(int brigth = 50, int goOut = 950)
         {
-            if (_thread != null)
+            if (brigth < 0 || goOut < 0)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(brigth)},{nameof(goOut)}");
+            }
+
+            if (executingThread != null)
             {
                 StopBlink();
             }
-            _signalStop = false;
+            signalStop = false;
 
-            _thread = new Thread(() =>
+            executingThread = new Thread(() =>
             {
                 int th_bright = brigth;
                 int th_goOut = goOut;
-                while (!_signalStop)
+                while (!signalStop)
                 {
-                    _led.Toggle();
+                    led.Write(PinValue.High);
                     Thread.Sleep(th_bright);
-                    _led.Toggle();
-
+                    led.Write(PinValue.Low);
                     Thread.Sleep(th_goOut);
                 }
             });
-            _thread.Start();
+            executingThread.Start();
         }
 
         /// <summary>
@@ -60,8 +71,8 @@ namespace NFApp.Services
         /// </summary>
         public void StopBlink()
         {
-            _signalStop = true;
-            while (_thread.ThreadState != ThreadState.Stopped)
+            signalStop = true;
+            while (executingThread.ThreadState != ThreadState.Stopped)
             {
                 Thread.Sleep(50);
             }
