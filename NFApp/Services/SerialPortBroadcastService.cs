@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Device.Gpio;
-using System.Diagnostics;
-using System.Text;
 using Iot.Device.Bmxx80.ReadResult;
 using Iot.Device.Common;
 using Microsoft.Extensions.Logging;
@@ -54,7 +51,6 @@ namespace NFApp.Services
                     }
                 };
                 hardware.SerialPortCOM2.WriteLine(JsonConvert.SerializeObject(result));
-                logger.LogDebug(JsonConvert.SerializeObject(result));
             }
         }
     }

@@ -57,7 +57,7 @@ namespace NFApp.Services
             SerialPortCOM2 = new("COM2", 115200);
 
             Button = new GpioButton(Gpio.IO00);
-            GpioController gpioController = new GpioController();
+            GpioController gpioController = new();
             LED = gpioController.OpenPin(Gpio.IO02, PinMode.Output);
             isConnectedBLESerialPortCOM2 = gpioController.OpenPin(Gpio.IO23, PinMode.Input);
             SHT30Sensor = new(I2cDevice.Create(new(1, (byte)I2cAddress.AddrLow, I2cBusSpeed.FastMode)));

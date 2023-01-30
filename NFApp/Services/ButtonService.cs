@@ -35,6 +35,7 @@ namespace NFApp.Services
 
         private void button_Press(object sender, EventArgs e)
         {
+            logger.LogTrace("button press");
             isEnable = !isEnable;
             if (isEnable)
             {

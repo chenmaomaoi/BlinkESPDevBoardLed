@@ -36,7 +36,7 @@ namespace NFApp.Logging.Extensions
             DebugLoggerFactory loggerFactory = new();
             LogDispatcher.LoggerFactory = loggerFactory;
             LoggerExtensions.MessageFormatter = typeof(LoggerFormat).GetType().GetMethod("MessageFormatter");
-
+            
             DebugLogger logger = (DebugLogger)loggerFactory.GetCurrentClassLogger();
             logger.MinLogLevel = level;
 
