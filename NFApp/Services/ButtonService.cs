@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using Iot.Device.Button;
-using Microsoft.Extensions.Logging;
 using NFApp.Services.Extensions.DependencyAttribute;
 using GC = nanoFramework.Runtime.Native.GC;
 
@@ -13,14 +12,12 @@ namespace NFApp.Services
     [SingletonDependency]
     public class ButtonService
     {
-        private readonly ILogger logger;
         private readonly GpioButton button;
         private readonly LEDBlinkService ledBlink;
         private bool isEnable;
 
-        public ButtonService(ILoggerFactory loggerFactory, DeviceService device, LEDBlinkService ledBlink)
+        public ButtonService(DeviceService device, LEDBlinkService ledBlink)
         {
-            logger = loggerFactory.CreateLogger(nameof(ButtonService));
             button = device.Button;
             this.ledBlink = ledBlink;
             isEnable = true;
@@ -29,7 +26,7 @@ namespace NFApp.Services
 
         private void button_Press(object sender, EventArgs e)
         {
-            logger.LogDebug("button press");
+            Logger.Log("Button Press");
             isEnable = !isEnable;
             if (isEnable)
             {

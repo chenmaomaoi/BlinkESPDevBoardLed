@@ -1,7 +1,6 @@
 using nanoFramework.Hosting;
 using System;
 using System.Diagnostics;
-using NFApp.Logging.Extensions;
 using NFApp.Services.Extensions;
 
 namespace NFApp
@@ -15,7 +14,6 @@ namespace NFApp
                 Host.CreateDefaultBuilder()
                     .ConfigureServices(services =>
                     {
-                        services.AddLogging();
                         services.AddServices();
                     })
                     .Build()

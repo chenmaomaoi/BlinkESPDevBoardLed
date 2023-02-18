@@ -3,7 +3,6 @@ using System.Device.Gpio;
 using System.Drawing;
 using System.Threading;
 using Iot.Device.Ws28xx.Esp32;
-using Microsoft.Extensions.Logging;
 using NFApp.Services.Extensions.DependencyAttribute;
 
 namespace NFApp.Services
@@ -14,7 +13,6 @@ namespace NFApp.Services
     [SingletonDependency]
     public class LEDBlinkService
     {
-        private readonly ILogger logger;
 
 #if DEV
         /// <summary>
@@ -38,9 +36,8 @@ namespace NFApp.Services
         /// </summary>
         private Thread executingThread;
 
-        public LEDBlinkService(ILoggerFactory loggerFactory, DeviceService device)
+        public LEDBlinkService( DeviceService device)
         {
-            logger = loggerFactory.CreateLogger(nameof(ButtonService));
 #if DEV
             new GpioController().SetPinMode(device.Light.PinNumber, PinMode.Output);
             Light = device.Light;

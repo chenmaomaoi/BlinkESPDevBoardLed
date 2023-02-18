@@ -30,6 +30,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>c42b6017-410c-4a5f-bc0c-80b66d7f6034</ProjectGuid>
+    <NullableContextOptions>enable</NullableContextOptions>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -39,15 +40,14 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\Extensions\DependencyAttribute\HostedDependencyAttribute.cs" />
     <Compile Include="Services\Extensions\DependencyAttribute\SingletonDependencyAttribute.cs" />
     <Compile Include="Services\Extensions\DependencyAttribute\TransientDependencyAttribute.cs" />
     <Compile Include="GPIOConfigs.cs" />
-    <Compile Include="Logging\LoggerFormat.cs" />
     <Compile Include="Services\DeviceService.cs" />
     <Compile Include="Services\Extensions\ServiceCollectionExtensions.cs" />
-    <Compile Include="Logging\Extensions\ServiceCollectionExtensions.cs" />
     <Compile Include="Services\ButtonService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,9 +71,6 @@
     </Reference>
     <Reference Include="nanoFramework.Hosting">
       <HintPath>..\packages\nanoFramework.Hosting.1.0.25\lib\nanoFramework.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.Logging">
-      <HintPath>..\packages\nanoFramework.Logging.1.1.63\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
