@@ -1,6 +1,5 @@
 using nanoFramework.Hosting;
 using System;
-using System.Diagnostics;
 using NFApp.Services.Extensions;
 
 namespace NFApp
@@ -21,7 +20,7 @@ namespace NFApp
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.StackTrace);
+                Logger.Log(ex.StackTrace, logLevel: LogLevel.Error);
             }
         }
     }

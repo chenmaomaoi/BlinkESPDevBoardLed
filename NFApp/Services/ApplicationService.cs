@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using nanoFramework.Hosting;
 using NFApp.Services.Extensions.DependencyAttribute;
 

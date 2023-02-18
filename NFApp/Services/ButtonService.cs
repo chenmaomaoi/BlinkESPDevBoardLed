@@ -2,7 +2,6 @@
 using System.Drawing;
 using Iot.Device.Button;
 using NFApp.Services.Extensions.DependencyAttribute;
-using GC = nanoFramework.Runtime.Native.GC;
 
 namespace NFApp.Services
 {
@@ -41,8 +40,6 @@ namespace NFApp.Services
             {
                 ledBlink.StopBlink();
             }
-
-            GC.Run(true);
         }
     }
 }
