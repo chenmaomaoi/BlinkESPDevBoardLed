@@ -2,16 +2,16 @@
 using System.Drawing;
 using Iot.Device.Button;
 using Microsoft.Extensions.Logging;
-using nanoFramework.Hosting;
 using NFApp.Services.Extensions.DependencyAttribute;
+using GC = nanoFramework.Runtime.Native.GC;
 
 namespace NFApp.Services
 {
     /// <summary>
     /// 板载按钮服务
     /// </summary>
-    [HostedDependency]
-    public class ButtonService : IHostedService
+    [SingletonDependency]
+    public class ButtonService
     {
         private readonly ILogger logger;
         private readonly GpioButton button;
@@ -24,22 +24,7 @@ namespace NFApp.Services
             button = device.Button;
             this.ledBlink = ledBlink;
             isEnable = true;
-        }
-
-        public void Start()
-        {
-#if DEV
-            ledBlink.StartBlinkAsync();
-#endif
-#if S2_DEV
-            ledBlink.StartBlinkAsync(Color.Red);
-#endif
-
             button.Press += button_Press;
-        }
-
-        public void Stop()
-        {
         }
 
         private void button_Press(object sender, EventArgs e)
@@ -59,6 +44,8 @@ namespace NFApp.Services
             {
                 ledBlink.StopBlink();
             }
+
+            GC.Run(true);
         }
     }
 }

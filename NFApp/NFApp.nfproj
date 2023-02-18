@@ -39,6 +39,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\Extensions\DependencyAttribute\HostedDependencyAttribute.cs" />
     <Compile Include="Services\Extensions\DependencyAttribute\SingletonDependencyAttribute.cs" />
     <Compile Include="Services\Extensions\DependencyAttribute\TransientDependencyAttribute.cs" />
@@ -76,6 +77,9 @@
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\packages\nanoFramework.Runtime.Events.1.11.6\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>..\packages\nanoFramework.Runtime.Native.1.6.6\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio">
       <HintPath>..\packages\nanoFramework.System.Device.Gpio.1.1.28\lib\System.Device.Gpio.dll</HintPath>
