@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace NFApp.DependencyAttribute
+namespace NFApp.Services.Extensions.DependencyAttribute
 {
     /// <summary>
-    /// 单例
+    /// 瞬态
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class SingletonDependencyAttribute : Attribute
+    public class TransientDependencyAttribute : Attribute
     {
     }
 }

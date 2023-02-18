@@ -39,9 +39,9 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="DependencyAttribute\HostedDependencyAttribute.cs" />
-    <Compile Include="DependencyAttribute\SingletonDependencyAttribute.cs" />
-    <Compile Include="DependencyAttribute\TransientDependencyAttribute.cs" />
+    <Compile Include="Services\Extensions\DependencyAttribute\HostedDependencyAttribute.cs" />
+    <Compile Include="Services\Extensions\DependencyAttribute\SingletonDependencyAttribute.cs" />
+    <Compile Include="Services\Extensions\DependencyAttribute\TransientDependencyAttribute.cs" />
     <Compile Include="GPIOConfigs.cs" />
     <Compile Include="Logging\LoggerFormat.cs" />
     <Compile Include="Services\DeviceService.cs" />

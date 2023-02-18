@@ -1,8 +1,8 @@
 ﻿using System;
 using nanoFramework.DependencyInjection;
 using nanoFramework.Hosting;
-using NFApp.DependencyAttribute;
 using System.Reflection;
+using NFApp.Services.Extensions.DependencyAttribute;
 
 namespace NFApp.Services.Extensions
 {

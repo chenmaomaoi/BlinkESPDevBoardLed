@@ -3,7 +3,7 @@ using System.Drawing;
 using Iot.Device.Button;
 using Microsoft.Extensions.Logging;
 using nanoFramework.Hosting;
-using NFApp.DependencyAttribute;
+using NFApp.Services.Extensions.DependencyAttribute;
 
 namespace NFApp.Services
 {

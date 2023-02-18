@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NFApp.DependencyAttribute
+namespace NFApp.Services.Extensions.DependencyAttribute
 {
     /// <summary>
     /// 需要继承IHostedService，随Host启动和停止

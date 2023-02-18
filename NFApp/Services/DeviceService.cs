@@ -1,6 +1,6 @@
 ﻿using System.Device.Gpio;
 using Iot.Device.Button;
-using NFApp.DependencyAttribute;
+using NFApp.Services.Extensions.DependencyAttribute;
 
 namespace NFApp.Services
 {
