@@ -1,5 +1,4 @@
 using nanoFramework.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using NFApp.Logging.Extensions;
@@ -9,19 +8,18 @@ namespace NFApp
 {
     public static class Program
     {
-        public static IHost host;
         public static void Main()
         {
             try
             {
-                host = Host.CreateDefaultBuilder()
+                Host.CreateDefaultBuilder()
                     .ConfigureServices(services =>
                     {
-                        services.AddDebugLogging(LogLevel.Trace);
+                        services.AddLogging();
                         services.AddServices();
                     })
-                    .Build();
-                host.Run();
+                    .Build()
+                    .Run();
             }
             catch (Exception ex)
             {

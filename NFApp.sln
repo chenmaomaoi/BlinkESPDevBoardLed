@@ -8,15 +8,23 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		DEV|Any CPU = DEV|Any CPU
 		Release|Any CPU = Release|Any CPU
+		S2_DEV|Any CPU = S2_DEV|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.DEV|Any CPU.ActiveCfg = DEV|Any CPU
+		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.DEV|Any CPU.Build.0 = DEV|Any CPU
+		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.DEV|Any CPU.Deploy.0 = DEV|Any CPU
 		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.S2_DEV|Any CPU.ActiveCfg = S2_DEV|Any CPU
+		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.S2_DEV|Any CPU.Build.0 = S2_DEV|Any CPU
+		{C42B6017-410C-4A5F-BC0C-80B66D7F6034}.S2_DEV|Any CPU.Deploy.0 = S2_DEV|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
