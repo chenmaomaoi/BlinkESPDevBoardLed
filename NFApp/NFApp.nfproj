@@ -42,7 +42,6 @@
     <Compile Include="DependencyAttribute\HostedDependencyAttribute.cs" />
     <Compile Include="DependencyAttribute\SingletonDependencyAttribute.cs" />
     <Compile Include="DependencyAttribute\TransientDependencyAttribute.cs" />
-    <Compile Include="Dtos\SencerValues.cs" />
     <Compile Include="GPIOConfigs.cs" />
     <Compile Include="Logging\LoggerFormat.cs" />
     <Compile Include="Services\DeviceService.cs" />
@@ -93,9 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
